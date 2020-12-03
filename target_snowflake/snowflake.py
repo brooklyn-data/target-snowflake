@@ -289,6 +289,8 @@ class SnowflakeTarget(SQLInterface):
     def serialize_table_record_null_value(self, remote_schema, streamed_schema, field, value):
         if value is None:
             return '\\\\N'
+        if isinstance(value, str):
+            return value.replace('\\', '\\\\')
         return value
 
     def serialize_table_record_datetime_value(self, remote_schema, streamed_schema, field, value):
